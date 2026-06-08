@@ -1,0 +1,12 @@
+google-adk
+google-cloud-aiplatform[adk,agent_engines]
+opentelemetry-instrumentation-google-genai
+opentelemetry-instrumentation-sqlite3
+opentelemetry-exporter-gcp-logging
+opentelemetry-exporter-gcp-monitoring
+opentelemetry-exporter-otlp-proto-grpc
+opentelemetry-instrumentation-vertexai
+opentelemetry-instrumentation-httpx
+opentelemetry-instrumentation-grpc
+pydantic
+cloudpickle
