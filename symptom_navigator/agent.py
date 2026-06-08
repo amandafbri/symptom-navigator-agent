@@ -1,8 +1,19 @@
-from google.adk.agents.llm_agent import Agent
-from . import tools
-
+from functools import cached_property                                                                                                                                                                           
+from google.adk.agents.llm_agent import Agent                                                                                                                                                                   
+from google.adk.models import Gemini                                                                                                                                                                            
+from google.genai import Client                                                                                                                                                                                 
+from . import tools                                                                                                                                                                                             
+                                                                                                                                                                                                                    
+# Cria uma classe customizada para forçar a região global no Gemini                                                                                                                                             
+class GlobalGemini(Gemini):                                                                                                                                                                                     
+    @cached_property                                                                                                                                                                                              
+    def api_client(self) -> Client:                                                                                                                                                                               
+        # Inicializa o cliente do GenAI SDK apontando para a região global no Vertex AI                                                                                                                             
+        return Client(vertexai=True, location="global")                                                                                                                                                             
+  
+# Define o agente usando a classe customizada
 root_agent = Agent(
-    model='gemini-3.1-flash-lite',
+    model=GlobalGemini(model='gemini-3.1-flash-lite'),
     name='symptom_navigator_agent',
     description='Assistente de Triagem e Direcionamento Médico (Symptom Navigator)',
     instruction="""Você é o Symptom Navigator, um assistente virtual simpático e prestativo para um portal de clínicas médicas. 

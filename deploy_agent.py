@@ -5,7 +5,8 @@ from symptom_navigator.agent import root_agent
 
 # Configurações do projeto e região
 project_id = os.getenv("GOOGLE_CLOUD_PROJECT", "amandafurtado-tests")
-location = "us-central1"
+location = os.getenv("GOOGLE_CLOUD_LOCATION", "global")
+deploy_location = os.getenv("DEPLOY_LOCATION", "us-central1")
 
 # Bucket de staging para o deploy
 staging_bucket = os.getenv("GCS_STAGING_BUCKET", f"gs://{project_id}-adk-staging") 
@@ -13,12 +14,12 @@ staging_bucket = os.getenv("GCS_STAGING_BUCKET", f"gs://{project_id}-adk-staging
 print("="*60)
 print(f"🚀 Iniciando deploy do Agente no Agent Runtime...")
 print(f"   Projeto: {project_id}")
-print(f"   Região:  {location}")
+print(f"   Região:  {deploy_location}")
 print(f"   Bucket:  {staging_bucket}")
 print("="*60)
 
 # Inicializa o cliente Vertex AI
-client = vertexai.Client(project=project_id, location=location)
+client = vertexai.Client(project=project_id, location=deploy_location)
 
 # Cria a aplicação ADK para deploy
 app = AdkApp(
