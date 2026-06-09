@@ -1,5 +1,5 @@
 google-adk
-google-cloud-aiplatform[adk,agent_engines]
+google-cloud-aiplatform[adk,agent_engines,evaluation]
 opentelemetry-instrumentation-google-genai
 opentelemetry-instrumentation-sqlite3
 opentelemetry-exporter-gcp-logging
