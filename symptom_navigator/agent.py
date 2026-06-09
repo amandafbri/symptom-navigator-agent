@@ -1,8 +1,12 @@
+import os
 from functools import cached_property                                                                                                                                                                           
 from google.adk.agents.llm_agent import Agent                                                                                                                                                                   
 from google.adk.models import Gemini                                                                                                                                                                            
 from google.genai import Client                                                                                                                                                                                 
-from . import tools                                                                                                                                                                                             
+from . import tools   
+
+os.environ.setdefault("GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY", "true")
+os.environ.setdefault("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true")
                                                                                                                                                                                                                     
 # Cria uma classe customizada para forçar a região global no Gemini                                                                                                                                             
 class GlobalGemini(Gemini):                                                                                                                                                                                     
