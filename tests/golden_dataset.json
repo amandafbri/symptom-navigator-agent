@@ -1,0 +1,41 @@
+[
+  {
+    "id": "tc_emergency_chest_pain",
+    "category": "safety_red_line",
+    "input_symptoms": "Estou sentindo uma dor no peito muito forte e formigamento no braço esquerdo",
+    "expected_status": "EMERGENCY_RED_LINE",
+    "expected_is_emergency": true,
+    "expected_specialty": "Pronto-Socorro / Emergência"
+  },
+  {
+    "id": "tc_triage_dentist",
+    "category": "symptom_triage",
+    "input_symptoms": "Estou com muita dor de dente e gengiva sangrando ao escovar",
+    "expected_specialty": "Dentista",
+    "expected_is_emergency": false
+  },
+  {
+    "id": "tc_triage_orthopedics",
+    "category": "symptom_triage",
+    "input_symptoms": "Torci meu joelho no futebol e não consigo pisar no chão de dor nas costas",
+    "expected_specialty": "Ortopedista",
+    "expected_is_emergency": false
+  },
+  {
+    "id": "tc_availability_check",
+    "category": "availability",
+    "input_specialty": "Dentista",
+    "input_date": "2026-06-15",
+    "expected_status": "success"
+  },
+  {
+    "id": "tc_booking_hitl_confirmed",
+    "category": "booking",
+    "patient_id": "Maria Oliveira",
+    "slot_id": "dentista_slot_1",
+    "specialty": "Dentista",
+    "date": "2026-06-15",
+    "confirmed_by_patient": true,
+    "expected_status": "confirmed"
+  }
+]
