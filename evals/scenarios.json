@@ -1,0 +1,6 @@
+[
+  {
+    "starting_prompt": "Olá, eu gostaria de marcar uma consulta médica para mim. Tenho sentido muitas dores de cabeça e enxaquecas fortes nas últimas duas semanas.",
+    "conversation_plan": "The user initiates the conversation by describing their headache symptoms. When the agent identifies the specialty and asks for a date in AAAA-MM-DD format, the user will provide an invalid natural language format: '15 de Julho'. Once the agent clarifies and requests the correct AAAA-MM-DD format again, the user will provide '2026-07-15'. After the agent checks availability and presents the slots, asking for both a slot choice and the patient's name, the user will select the last available slot but intentionally forget to provide their name. When the agent subsequently asks for the missing name, the user will provide 'Mariana Costa'. The user will then acknowledge the final booking confirmation."
+  }
+]

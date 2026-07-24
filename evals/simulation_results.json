@@ -1,0 +1,250 @@
+[
+  {
+    "starting_prompt": "Olá, eu gostaria de marcar uma consulta médica para mim. Tenho sentido muitas dores de cabeça e enxaquecas fortes nas últimas duas semanas.",
+    "conversation_plan": "The user initiates the conversation by describing their headache symptoms. When the agent identifies the specialty and asks for a date in AAAA-MM-DD format, the user will provide an invalid natural language format: '15 de Julho'. Once the agent clarifies and requests the correct AAAA-MM-DD format again, the user will provide '2026-07-15'. After the agent checks availability and presents the slots, asking for both a slot choice and the patient's name, the user will select the last available slot but intentionally forget to provide their name. When the agent subsequently asks for the missing name, the user will provide 'Mariana Costa'. The user will then acknowledge the final booking confirmation.",
+    "agent_data": {
+      "agents": {
+        "symptom_navigator_agent": {
+          "agent_id": "symptom_navigator_agent",
+          "agent_type": "LlmAgent",
+          "description": "Assistente de Triagem e Direcionamento Médico (Symptom Navigator)",
+          "instruction": "Você é o Symptom Navigator, um assistente virtual simpático e prestativo para um portal de clínicas médicas. \nSeu objetivo é ajudar pacientes a triar seus sintomas, direcioná-los para a especialidade médica adequada e realizar o agendamento de consultas.\n\nSiga rigorosamente estes passos para interagir com o usuário:\n1. Peça para o paciente descrever os sintomas que está sentindo, caso ele ainda não o tenha feito.\n2. Com base nos sintomas descritos, use a ferramenta `match_symptoms_to_specialty` para identificar a especialidade médica recomendada.\n3. Informe ao paciente a especialidade identificada e pergunte para qual data ele gostaria de verificar a disponibilidade de consultas (no formato AAAA-MM-DD).\n4. Use a ferramenta `check_availability` com a especialidade e a data fornecidas para buscar os horários disponíveis.\n5. Apresente os horários disponíveis (slots), os nomes dos médicos e peça para o paciente escolher um dos slots (fornecendo o slot_id ou horário) e informar seu nome completo ou identificador único.\n6. Use a ferramenta `book_appointment` com o identificador do paciente e o slot_id selecionado para efetivar a marcação da consulta.\n7. Confirme os detalhes do agendamento finalizado de forma clara.\n\nLembre-se de ser empático, atencioso e falar sempre em português.",
+          "tools": [
+            {
+              "function_declarations": [
+                {
+                  "description": "Mapeia os sintomas informados pelo paciente para a especialidade médica correta.\n\nArgs:\n    symptoms: Descrição dos sintomas fornecidos pelo paciente (ex: 'Estou com dor no peito').\n\nReturns:\n    Um dicionário contendo a especialidade médica identificada.",
+                  "name": "match_symptoms_to_specialty",
+                  "parameters": {
+                    "properties": {
+                      "symptoms": {
+                        "type": "STRING"
+                      }
+                    },
+                    "required": [
+                      "symptoms"
+                    ],
+                    "type": "OBJECT"
+                  },
+                  "behavior": null
+                }
+              ]
+            },
+            {
+              "function_declarations": [
+                {
+                  "description": "Busca os horários e vagas disponíveis na clínica para uma determinada especialidade e data.\n\nArgs:\n    specialty: A especialidade médica (ex: 'Cardiologista', 'Ortopedista', 'Clínico Geral').\n    date: A data no formato 'AAAA-MM-DD' (ex: '2026-06-15').\n\nReturns:\n    Um dicionário com a lista de horários/slots disponíveis.",
+                  "name": "check_availability",
+                  "parameters": {
+                    "properties": {
+                      "specialty": {
+                        "type": "STRING"
+                      },
+                      "date": {
+                        "type": "STRING"
+                      }
+                    },
+                    "required": [
+                      "specialty",
+                      "date"
+                    ],
+                    "type": "OBJECT"
+                  },
+                  "behavior": null
+                }
+              ]
+            },
+            {
+              "function_declarations": [
+                {
+                  "description": "Efetiva o agendamento da consulta médica para o paciente no slot selecionado.\n\nArgs:\n    patient_id: O identificador único do paciente (pode ser o nome completo, CPF ou ID).\n    slot_id: O identificador único do horário/slot de consulta selecionado (retornado pelo check_availability).\n\nReturns:\n    Um dicionário com o status do agendamento e os detalhes da confirmação.",
+                  "name": "book_appointment",
+                  "parameters": {
+                    "properties": {
+                      "patient_id": {
+                        "type": "STRING"
+                      },
+                      "slot_id": {
+                        "type": "STRING"
+                      }
+                    },
+                    "required": [
+                      "patient_id",
+                      "slot_id"
+                    ],
+                    "type": "OBJECT"
+                  },
+                  "behavior": null
+                }
+              ]
+            }
+          ],
+          "sub_agents": []
+        }
+      },
+      "turns": [
+        {
+          "turn_index": 0,
+          "turn_id": "e-0a4a7909-cf84-4dea-8fd3-f01ed1d50671",
+          "events": [
+            {
+              "author": "user",
+              "content": {
+                "parts": [
+                  {
+                    "text": "Olá, eu gostaria de marcar uma consulta médica para mim. Tenho sentido muitas dores de cabeça e enxaquecas fortes nas últimas duas semanas."
+                  }
+                ],
+                "role": "user"
+              },
+              "event_time": "2026-06-09T19:24:35.810601+00:00"
+            },
+            {
+              "author": "symptom_navigator_agent",
+              "content": {
+                "parts": [
+                  {
+                    "function_call": {
+                      "id": "adk-78bfb394-e10d-4a48-8ba3-6ca9e5fe7b90",
+                      "args": {
+                        "symptoms": "dores de cabeça e enxaquecas fortes nas últimas duas semanas"
+                      },
+                      "name": "match_symptoms_to_specialty"
+                    },
+                    "thought_signature": "AY89a1+7XQncBkLfLDeWDuh4QN9pDnQNGO6iL5inFFMtjBla0EUXv6f0gXE4m28ipUo="
+                  }
+                ],
+                "role": "model"
+              },
+              "event_time": "2026-06-09T19:24:35.810601+00:00"
+            },
+            {
+              "author": "symptom_navigator_agent",
+              "content": {
+                "parts": [
+                  {
+                    "function_response": {
+                      "id": "adk-78bfb394-e10d-4a48-8ba3-6ca9e5fe7b90",
+                      "name": "match_symptoms_to_specialty",
+                      "response": {
+                        "symptoms": "dores de cabeça e enxaquecas fortes nas últimas duas semanas",
+                        "specialty": "Clínico Geral"
+                      }
+                    }
+                  }
+                ],
+                "role": "user"
+              },
+              "event_time": "2026-06-09T19:24:35.810601+00:00"
+            },
+            {
+              "author": "agent",
+              "content": {
+                "parts": [
+                  {
+                    "text": "Sinto muito que você esteja passando por isso; dores de cabeça persistentes podem ser bem desconfortáveis.\n\nCom base no que você relatou, a especialidade recomendada para uma avaliação inicial é o **Clínico Geral**.\n\nPara que eu possa verificar a disponibilidade na nossa agenda, por favor, me informe para qual data você gostaria de agendar a consulta (no formato AAAA-MM-DD)?",
+                    "thought_signature": "AY89a18z6UElrM7nTCgDrNLbqmGAcg8pg75sEtS5eoopLDfueBrIgYdzZrCE3efNnnc="
+                  }
+                ],
+                "role": "model"
+              },
+              "event_time": "2026-06-09T19:24:35.810601+00:00"
+            }
+          ]
+        },
+        {
+          "turn_index": 1,
+          "turn_id": "e-0baa0640-1edd-4d6a-be6f-bd99b37772f8",
+          "events": [
+            {
+              "author": "user",
+              "content": {
+                "parts": [
+                  {
+                    "text": "15 de Julho."
+                  }
+                ],
+                "role": "user"
+              },
+              "event_time": "2026-06-09T19:24:43.201157+00:00"
+            },
+            {
+              "author": "symptom_navigator_agent",
+              "content": {
+                "parts": [
+                  {
+                    "function_call": {
+                      "id": "adk-a7ad62ee-21bf-4147-9b24-2b27d838c92b",
+                      "args": {
+                        "specialty": "Clínico Geral",
+                        "date": "2026-07-15"
+                      },
+                      "name": "check_availability"
+                    },
+                    "thought_signature": "AY89a1/bGMrEmbl9XgV05vH9cJt/2fi8ztaeOicwolsG4F+aGegH7JV2e//d1L9M21I="
+                  }
+                ],
+                "role": "model"
+              },
+              "event_time": "2026-06-09T19:24:43.201157+00:00"
+            },
+            {
+              "author": "symptom_navigator_agent",
+              "content": {
+                "parts": [
+                  {
+                    "function_response": {
+                      "id": "adk-a7ad62ee-21bf-4147-9b24-2b27d838c92b",
+                      "name": "check_availability",
+                      "response": {
+                        "specialty": "Clínico Geral",
+                        "date": "2026-07-15",
+                        "available_slots": [
+                          {
+                            "slot_id": "clínico geral_1",
+                            "time": "09:00",
+                            "doctor": "Dr. Silva"
+                          },
+                          {
+                            "slot_id": "clínico geral_2",
+                            "time": "10:30",
+                            "doctor": "Dr. Oliveira"
+                          },
+                          {
+                            "slot_id": "clínico geral_3",
+                            "time": "14:00",
+                            "doctor": "Dr. Santos"
+                          },
+                          {
+                            "slot_id": "clínico geral_4",
+                            "time": "15:30",
+                            "doctor": "Dr. Souza"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ],
+                "role": "user"
+              },
+              "event_time": "2026-06-09T19:24:43.201157+00:00"
+            },
+            {
+              "author": "agent",
+              "content": {
+                "parts": [
+                  {
+                    "text": "Para o dia 15 de julho de 2026, encontrei os seguintes horários disponíveis com nossos Clínicos Gerais:\n\n*   **09:00** - Dr. Silva (ID: clínico geral_1)\n*   **10:30** - Dr. Oliveira (ID: clínico geral_2)\n*   **14:00** - Dr. Santos (ID: clínico geral_3)\n*   **15:30** - Dr. Souza (ID: clínico geral_4)\n\nPor favor, me informe qual desses horários você prefere e o seu nome completo para que eu possa efetivar o seu agendamento.",
+                    "thought_signature": "AY89a1/wHZ4tXr5Nd076FFJJ+hYHnPSIKrwNRChtrENyPri77lpt/lDzV65KAp1U9kg="
+                  }
+                ],
+                "role": "model"
+              },
+              "event_time": "2026-06-09T19:24:43.201157+00:00"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]
