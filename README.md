@@ -35,6 +35,17 @@ symptom-navigator-agent/
 
 ---
 
+## 💬 Execução Local Interativa (Chat no Terminal)
+
+Para interagir com o agente diretamente pelo terminal:
+
+### Chat Interativo no Terminal
+```bash
+.venv/bin/python3 chat_local.py
+```
+
+---
+
 ## 🧪 Execução dos Testes Automatizados (CI/CD)
 
 Para rodar a suíte de testes automatizados e validar o comportamento das ferramentas, redação de PII, guardrails de emergência e hook HITL:
